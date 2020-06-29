@@ -208,10 +208,11 @@ dependencies {
     antlr2 "org.apache.ant:ant-antlr:$antVersion"
 
     testImplementation project(':groovy-ant')
-    testImplementation project(':groovy-xml')
     testImplementation project(':groovy-dateutil')
+    testImplementation project(':groovy-json')
     testImplementation project(':groovy-test')
     testImplementation project(':groovy-macro')
+    testImplementation project(':groovy-xml')
 }
 
 ext.generatedDirectory = "${buildDir}/generated/sources"
