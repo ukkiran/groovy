@@ -22,11 +22,13 @@ on:
     branches:
       - GROOVY_2_5_X
       - GROOVY_3_0_X
+      - check-PR1293
   #      - master
   pull_request:
     branches:
       - GROOVY_2_5_X
       - GROOVY_3_0_X
+      - check-PR1293
 #      - master
 jobs:
   build:
