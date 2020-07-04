@@ -50,7 +50,7 @@ jobs:
       # Select correct Grails branch for this build:
       - name: Checkout Grails 4.1.x (master)
         run: cd .. && git clone --depth 1 https://github.com/grails/grails-core.git -b master
-        if: ${{ github.ref == 'refs/heads/GROOVY_3_0_X' }}
+        if: ${{ github.ref == 'refs/heads/check-PR1293' }}
       - name: Checkout Grails 4.0.x (4.0.x)
         run: cd .. && git clone --depth 1 https://github.com/grails/grails-core.git -b 4.0.x
         if: ${{ github.ref == 'refs/heads/GROOVY_2_5_X' }}
