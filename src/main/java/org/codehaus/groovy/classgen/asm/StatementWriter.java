@@ -127,18 +127,26 @@ public class StatementWriter {
         writeStatementLabel(statement);
 
         CompileStack compileStack = controller.getCompileStack();
-        MethodVisitor mv = controller.getMethodVisitor();
         OperandStack operandStack = controller.getOperandStack();
 
         compileStack.pushLoop(statement.getVariableScope(), statement.getStatementLabels());
-
-        // declare the loop counter
-        BytecodeVariable variable = compileStack.defineVariable(statement.getVariable(), false);
 
         // then get the iterator and generate the loop control
         MethodCallExpression iterator = new MethodCallExpression(statement.getCollectionExpression(), "iterator", new ArgumentListExpression());
         iterator.visit(controller.getAcg());
         operandStack.doGroovyCast(ClassHelper.Iterator_TYPE);
+
+        writeForInLoopControlAndBlock(statement);
+        compileStack.pop();
+    }
+
+    protected void writeForInLoopControlAndBlock(ForStatement statement) {
+        CompileStack compileStack = controller.getCompileStack();
+        MethodVisitor mv = controller.getMethodVisitor();
+        OperandStack operandStack = controller.getOperandStack();
+
+        // declare the loop counter
+        BytecodeVariable variable = compileStack.defineVariable(statement.getVariable(), false);
 
         int iteratorIndex = compileStack.defineTemporaryVariable("iterator", ClassHelper.Iterator_TYPE, true);
         Label continueLabel = compileStack.getContinueLabel();
@@ -162,7 +170,6 @@ public class StatementWriter {
         mv.visitLabel(breakLabel);
 
         compileStack.removeVar(iteratorIndex);
-        compileStack.pop();
     }
 
     protected void writeIteratorHasNext(final MethodVisitor mv) {
